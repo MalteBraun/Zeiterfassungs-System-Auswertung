@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
+import auswertung.Settings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -46,20 +47,11 @@ public class GuiController {
  	}
  }
  
- /**public void startProgramm(ActionEvent event) throws Exception{
+public void startProgramm(ActionEvent event) throws Exception{
 	 	
-	 	String startDate = von_datePicker.getPromptText();
-	 	String endDate = bis_datePicker.getPromptText();
-	 	String path = ausgabeverzeichnissField.getText();
-	 	
-	 	DBQuery.connectToDB(startDate, endDate, path);
-	 	Date[] holidays = DBQuery.getHolidays();
-		Mitarbeiter[] mitarbeiterDB = DBQuery.createMitarbeiterDB();
-		ExcelWriter.createExcel(startDate, endDate);
-		ExcelWriter.addHeader();
-		ExcelWriter.addImage();
-		ExcelWriter.fillExcel(mitarbeiterDB);
-		ExcelWriter.fillSum(mitarbeiterDB); 
- }**/
+
+	
+	Settings settings = new Settings();
+ } 
 }
 
