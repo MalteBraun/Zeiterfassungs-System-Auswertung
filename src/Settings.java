@@ -43,13 +43,14 @@ public class Settings {
     	ExcelWriter excelWriter = new ExcelWriter(startDate.toString(), endDate.toString(), path, mitarbeiterDB);
     	
     	System.out.println("Start");
+    	excelWriter.createExcel();
     	excelWriter.addHeader();
-    	excelWriter.addImage();
+    	//excelWriter.addImage();
     	excelWriter.fillExcel();
     	excelWriter.fillSum();
 	}
 	
-	public static void sendMail(String path){
+	public void sendMail(String path){
 		
 		
 	}

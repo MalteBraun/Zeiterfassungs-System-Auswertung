@@ -30,7 +30,7 @@ public class ExcelWriter {
     private String path;
     private Mitarbeiter[] mitarbeiterDB;
     
-    public ExcelWriter(String startDay, String endDate, String path, Mitarbeiter[] mitarbeiterDB){
+    public ExcelWriter(String startDate, String endDate, String path, Mitarbeiter[] mitarbeiterDB){
     	this.startDate = startDate;
     	this.endDate = endDate;
     	this.path = path;
@@ -38,7 +38,7 @@ public class ExcelWriter {
     }
     
     
-    protected void createExcel() {
+    public void createExcel() {
         
         workbook = new HSSFWorkbook();
         sheet = workbook.createSheet("Urlaubs- und Krankheits-Auswertung");

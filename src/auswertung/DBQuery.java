@@ -7,8 +7,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
@@ -20,16 +18,14 @@ import java.util.Date;
 public class DBQuery {
      
     private static Connection connection;
-    public static Date[] feiertage;
-    
-	public static String startDayString;
-	public static String endDayString;
-
-	public static String startDayFormated;
-	public static String endDayFormated;
+    public  static Date[] feiertage;
+    public  static String startDayString;
+    public  static String endDayString;
+    public  static String startDayFormated;
+    public  static String endDayFormated;
 	
      	
-    public static void connectToDB(){  	    	
+    public static  void connectToDB(){  	    	
         try {                 	
             connection = DriverManager.getConnection("jdbc:firebirdsql://192.168.99.151/HecomZEF?encoding=ISO8859_1", "SYSDBA", "masterkey");
             System.out.println("Connection hergestellt");
@@ -39,7 +35,7 @@ public class DBQuery {
         }
     }  
             
-    protected static ResultSet query(String queryString) {
+    protected static  ResultSet query(String queryString) {
         try {
             ResultSet rs = null;
             rs = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY, ResultSet.HOLD_CURSORS_OVER_COMMIT).executeQuery(queryString);
@@ -52,7 +48,7 @@ public class DBQuery {
         }
     }
             
-    public static Date[] getHolidays() throws Exception
+    public static  Date[] getHolidays() throws Exception
     {   
 		PreparedStatement prepstate = connection.prepareStatement("SELECT TAG FROM AUSWERTUNG WHERE TAG >= ? AND TAG <= ? AND Feiertag = 1 GROUP BY TAG", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY, ResultSet.HOLD_CURSORS_OVER_COMMIT);	
 		prepstate.setString(1, startDayString);
@@ -71,7 +67,7 @@ public class DBQuery {
         return feiertage;
     }
     
-    public static Mitarbeiter[] createMitarbeiterDB() throws Exception
+    public static  Mitarbeiter[] createMitarbeiterDB() throws Exception
     {
     	String query = "Select VORNAME, NACHNAME, PNR from PERSONAL where AUSGETRETEN = 0 and PNR <> 16 and PNR <> 17 and PNR < 990 ORDER by PNR";
     	try
@@ -96,7 +92,7 @@ public class DBQuery {
     	}	
     }
     
-    protected static ResultSet get_krankheit(String pnr) throws Exception{
+    protected static  ResultSet get_krankheit(String pnr) throws Exception{
     	//System.out.println("getKrankheit");
     	PreparedStatement prepstate = connection.prepareStatement("Select TAG, BEG_STD, BEG_MIN, END_STD, END_MIN, KENNZEICHEN from STEMPELUNG where PNR = ? and KENNZEICHEN = 'K' AND TAG >= ? AND TAG <= ? ORDER by TAG ASC", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 		prepstate.setString(1, pnr);
@@ -110,7 +106,7 @@ public class DBQuery {
 		return rs;
     }
       
-    protected static ResultSet get_urlaub(String pnr) throws Exception{
+    protected static  ResultSet get_urlaub(String pnr) throws Exception{
     	System.out.println("getUrlaub");
     	PreparedStatement prepstate = connection.prepareStatement("Select PNR, TAG, BEG_STD, BEG_MIN, END_STD, END_MIN, KENNZEICHEN from STEMPELUNG where PNR = ?  AND TAG >= ? AND TAG <= ? and (KENNZEICHEN = 'G' or KENNZEICHEN = 'H') ORDER by TAG ASC", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 		prepstate.setString(1, pnr);

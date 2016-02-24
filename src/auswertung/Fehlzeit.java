@@ -13,12 +13,12 @@ import java.sql.SQLException;
 
 public class Fehlzeit {
 
-	private String typ;
+    	private String typ;
 	private String pnr;
-    private Stempelung[] stempel;
-    private Intervall[] intervall;
-    private String[] vonbis;
-    private Core core;
+	private Stempelung[] stempel;
+	private Intervall[] intervall;
+	private String[] vonbis;
+	private Core core;
 
     
 
@@ -30,7 +30,6 @@ public class Fehlzeit {
  		switch(typ){
  		case "Krankheit": 
  			getKrankheitAusfall();
- 			System.out.println("Fehlzeit Done I");
  			break;
  		case "Urlaub":;
  			getUrlaubAusfall();
@@ -39,13 +38,9 @@ public class Fehlzeit {
  			System.out.println("Fehler beim Erstellen von Abwesenheitsstempelung");
  			Thread.currentThread().getStackTrace();	
  		}
- 		System.out.println("Fehlzeit Done II");
  		this.core = new Core();
- 		System.out.println("Core created");
  		this.vonbis =  core.getVonBis(stempel);
- 		System.out.println("VonBis erstellt");
  		this.intervall = core.getIntervall();
- 		System.out.println("Fehlzeit Fertiggestellt");
  	}
  	 	
 	 public void getKrankheitAusfall() throws Exception
