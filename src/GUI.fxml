@@ -16,7 +16,7 @@
       <Label layoutX="38.0" layoutY="297.0" text="Info:" />
       <TextArea fx:id="infoTextArea" layoutX="35.0" layoutY="323.0" prefHeight="64.0" prefWidth="442.0" />
       <Button fx:id="durchsuchenButton" layoutX="493.0" layoutY="181.0" mnemonicParsing="false" onAction="#chooseFile" prefHeight="25.0" prefWidth="91.0" text="Durchsuchen" />
-      <Button fx:id="startButton" layoutX="491.0" layoutY="323.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="91.0" text="Start" />
+      <Button fx:id="startButton" layoutX="491.0" layoutY="323.0" mnemonicParsing="false" onAction="#startProgramm" prefHeight="25.0" prefWidth="91.0" text="Start" />
       <Button fx:id="exitButton" layoutX="491.0" layoutY="362.0" mnemonicParsing="false" onAction="#closeWindow" prefHeight="25.0" prefWidth="91.0" text="Exit" />
       <RadioButton fx:id="emailRadio" layoutX="38.0" layoutY="220.0" mnemonicParsing="false" text="Datei als Email versenden" />
       <ProgressBar fx:id="fortschrittProgressBar" layoutX="37.0" layoutY="272.0" prefHeight="18.0" prefWidth="442.0" progress="0.0" />

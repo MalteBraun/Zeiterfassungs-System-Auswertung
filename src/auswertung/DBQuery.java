@@ -28,50 +28,17 @@ public class DBQuery {
 	public static String startDayFormated;
 	public static String endDayFormated;
 	
-	public static String path;
      	
-    protected static void connectToDB(String startDay, String endDay, String path){
-
-    	startDayString = convertDateSQL(startDay);
-    	endDayString = convertDateSQL(endDay);
-    	
-    	startDayFormated = convertDateZEF(startDay);
-    	endDayFormated = convertDateZEF(endDay);
-    	
-    	DBQuery.path = path+"/";
-    	
-        try {          
-        	
+    public static void connectToDB(){  	    	
+        try {                 	
             connection = DriverManager.getConnection("jdbc:firebirdsql://192.168.99.151/HecomZEF?encoding=ISO8859_1", "SYSDBA", "masterkey");
+            System.out.println("Connection hergestellt");
         } catch (SQLException ex) {
             System.out.println("Datenbankverbindung konnte nicht hergestellt werden.");
             Thread.currentThread().getStackTrace();
         }
     }  
-    
-    private static String convertDateSQL(String value) {
-        try {
-            SimpleDateFormat formatZEF = new SimpleDateFormat("dd.MM.yyyy");
-            SimpleDateFormat formatSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date date = (formatZEF.parse(value));
-            return formatSQL.format(date);
-        } catch (ParseException ex) {
-            System.out.println("Fehler in convertDate.");    
-        }
-        return null;
-    }
-    
-    private static String convertDateZEF(String value) {
-        try {
-            SimpleDateFormat formatZEF = new SimpleDateFormat("dd.MM.yyyy");
-            Date date = (formatZEF.parse(value));
-            return formatZEF.format(date);
-        } catch (ParseException ex) {
-            System.out.println("Fehler in convertDate.");    
-        }
-        return null;
-    }
-        
+            
     protected static ResultSet query(String queryString) {
         try {
             ResultSet rs = null;
@@ -85,7 +52,7 @@ public class DBQuery {
         }
     }
             
-    protected static Date[] getHolidays() throws Exception
+    public static Date[] getHolidays() throws Exception
     {   
 		PreparedStatement prepstate = connection.prepareStatement("SELECT TAG FROM AUSWERTUNG WHERE TAG >= ? AND TAG <= ? AND Feiertag = 1 GROUP BY TAG", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY, ResultSet.HOLD_CURSORS_OVER_COMMIT);	
 		prepstate.setString(1, startDayString);
@@ -104,7 +71,7 @@ public class DBQuery {
         return feiertage;
     }
     
-    protected static Mitarbeiter[] createMitarbeiterDB() throws Exception
+    public static Mitarbeiter[] createMitarbeiterDB() throws Exception
     {
     	String query = "Select VORNAME, NACHNAME, PNR from PERSONAL where AUSGETRETEN = 0 and PNR <> 16 and PNR <> 17 and PNR < 990 ORDER by PNR";
     	try
