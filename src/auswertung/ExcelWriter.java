@@ -157,10 +157,10 @@ public class ExcelWriter {
 
         ueberschrift_cell.setCellValue("Urlaubs- & Krankheitsauswertung");
         auswertungszeitraum_cell.setCellValue("Auswertungszeitraum");
-        startDatum_cell.setCellValue(DBQuery.startDayFormated + " - " + DBQuery.endDayFormated);
+        startDatum_cell.setCellValue(startDate + " - " + endDate);
  
         try {
-            FileOutputStream output = new FileOutputStream(path + "Fehlzeitenerfassung_" + this.startDate + "-" + this.endDate + ".xls");
+            FileOutputStream output = new FileOutputStream(path + "Fehlzeitenerfassung_" + startDate + "-" + endDate + ".xls");
             workbook.write(output);
             output.close();
         } catch (Exception e) {

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Date;
 
+import auswertung.DBQuery;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -22,13 +23,13 @@ import javafx.stage.FileChooser;
 public class GuiController {
 
 	@FXML private Label hecom_logo;
-	@FXML private DatePicker von_datePicker;
-	@FXML private DatePicker bis_datePicker;
-	@FXML private TextField ausgabeverzeichnissField;
+	@FXML protected DatePicker von_datePicker;
+	@FXML protected DatePicker bis_datePicker;
+	@FXML protected TextField ausgabeverzeichnissField;
 	@FXML private Button durchsuchenButton;
 	@FXML private RadioButton emailRadio;
 	@FXML private ProgressBar fortschrittProgressBar;
-	@FXML private TextArea infoTextArea;
+	@FXML public TextArea infoTextArea;
 	@FXML private Button startButton;
 	@FXML private Button exitButton;
 
@@ -58,13 +59,15 @@ public class GuiController {
 	System.out.println("Enddate: "+endDate.toString());
 	System.out.println("Path: "+path);
 	System.out.println("email: "+email.toString());
+	System.out.println(" -----  ");
+	System.out.println();
 	
 	if(valuesValid(startDate, endDate, path)){
-		Settings settings = new Settings(startDate, endDate, path, email);
-		settings.startApp();
-		if(email){
-			settings.sendMail(path);
-		}
+	    Settings settings = new Settings(startDate, endDate, path, email);
+	    settings.startApp();
+	    if(email){
+		settings.sendMail(path);
+	    }
 	}
  }
  
