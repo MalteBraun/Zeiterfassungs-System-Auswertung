@@ -1,11 +1,8 @@
 
 
 import java.io.File;
-import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Date;
 
-import auswertung.DBQuery;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -16,11 +13,10 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
 
 public class GuiController {
+
 
 	@FXML private Label hecom_logo;
 	@FXML protected DatePicker von_datePicker;
@@ -54,19 +50,20 @@ public class GuiController {
 	LocalDate endDate = bis_datePicker.getValue();
 	String path = ausgabeverzeichnissField.getText();
 	Boolean email = emailRadio.isSelected();
-	
+	/*
 	System.out.println("Startdate: "+startDate.toString());
 	System.out.println("Enddate: "+endDate.toString());
 	System.out.println("Path: "+path);
 	System.out.println("email: "+email.toString());
 	System.out.println(" -----  ");
 	System.out.println();
+	*/
 	
 	if(valuesValid(startDate, endDate, path)){
 	    Settings settings = new Settings(startDate, endDate, path, email);
 	    settings.startApp();
 	    if(email){
-		settings.sendMail(path);
+		settings.sendMail();
 	    }
 	}
  }
@@ -79,7 +76,4 @@ public class GuiController {
 		 return true;
 	 } 
  }
-
-
 }
-

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MailController">
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" text="Empfänger:" />
+      <TextField fx:id="toAdress" layoutX="14.0" layoutY="31.0" prefHeight="25.0" prefWidth="208.0" />
+      <TextArea fx:id="bodyText" layoutX="14.0" layoutY="116.0" prefHeight="170.0" prefWidth="468.0" />
+      <Button layoutX="398.0" layoutY="31.0" mnemonicParsing="false" onAction="#sendMail" prefHeight="25.0" prefWidth="84.0" text="Senden" />
+      <Label fx:id="SuccessMessage" layoutX="282.0" layoutY="35.0" textFill="#49b545">
+         <font>
+            <Font size="15.0" />
+         </font></Label>
+      <Label layoutX="14.0" layoutY="65.0" text="Betreff:" />
+      <TextField fx:id="title" layoutX="14.0" layoutY="82.0" prefHeight="25.0" prefWidth="208.0" />
+      <Button fx:id="closeButton" layoutX="398.0" layoutY="70.0" mnemonicParsing="false" onAction="#closeWindow" prefHeight="25.0" prefWidth="84.0" text="Schließen" />
+   </children>
+</Pane>

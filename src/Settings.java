@@ -8,6 +8,10 @@ import java.util.Locale;
 import auswertung.DBQuery;
 import auswertung.ExcelWriter;
 import auswertung.Mitarbeiter;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 public class Settings {
 
@@ -37,17 +41,25 @@ public class Settings {
 	    Mitarbeiter[] mitarbeiterDB = datenbank.createMitarbeiterDB();    //Erstelt einen Array aus Mitarbeiter Objekten aller Aktiven Mitarbeiter
  
     	    ExcelWriter excelWriter = new ExcelWriter(startDayFormated, endDayFormated, path, mitarbeiterDB);
-    		
     	    excelWriter.createExcel();
     	    excelWriter.addHeader();
-    	    //excelWriter.addImage();
     	    excelWriter.fillExcel();
     	    excelWriter.fillSum();
+    	    excelWriter.addImage();
 	}
 	
-	public void sendMail(String path){
+	public void sendMail(){
+	    try {
 		
+		Parent root = FXMLLoader.load(getClass().getResource("Mail_GUI.fxml"));
+		Stage stage = new Stage();
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
 		
+	} catch(Exception e) {
+		e.printStackTrace();
+	}
 	}
 	
 	

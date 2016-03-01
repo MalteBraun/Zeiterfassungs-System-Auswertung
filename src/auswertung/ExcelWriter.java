@@ -54,17 +54,8 @@ public class ExcelWriter {
         sheet.setColumnWidth(3, 8 * 256);
         sheet.setColumnWidth(4, 21 * 256);
         sheet.setColumnWidth(5, 8 * 256);
-
+        
         addTitles();
-
-        try {
-            FileOutputStream output = new FileOutputStream(path + "Fehlzeitenerfassung_" + this.startDate + "-" + this.startDate + ".xls");
-            workbook.write(output);
-            output.close();
-        } catch (Exception e) {
-            System.out.println("Fehler beim erstellen des Exceldokuments");
-            e.printStackTrace();
-        }
     }
 
     protected void addTitles() {

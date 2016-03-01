@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import javafx.scene.control.*?>
 <?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GuiController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GuiController">
    <children>
       <DatePicker fx:id="von_datePicker" layoutX="37.0" layoutY="126.0" />
       <DatePicker fx:id="bis_datePicker" layoutX="302.0" layoutY="126.0" />
@@ -21,7 +21,9 @@
       <RadioButton fx:id="emailRadio" layoutX="38.0" layoutY="220.0" mnemonicParsing="false" text="Datei als Email versenden" />
       <ProgressBar fx:id="fortschrittProgressBar" layoutX="37.0" layoutY="272.0" prefHeight="18.0" prefWidth="442.0" progress="0.0" />
       <Label layoutX="34.0" layoutY="248.0" text="Fortschritt:" />
-      <ImageView fitHeight="96.0" fitWidth="189.0" layoutX="38.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="hecom_logo" layoutX="35.0" layoutY="14.0" text="Label" />
+      <ImageView fitHeight="92.0" fitWidth="311.0" layoutX="38.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../bin/auswertung/hecom_logo.jpg" />
+         </image></ImageView>
    </children>
 </Pane>
