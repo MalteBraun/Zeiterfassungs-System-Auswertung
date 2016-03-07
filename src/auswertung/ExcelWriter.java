@@ -29,12 +29,19 @@ public class ExcelWriter {
     private String endDate;
     private String path;
     private Mitarbeiter[] mitarbeiterDB;
+    private static String filename;
     
+    public static String getFilename() {
+        return filename;
+    }
+
+
     public ExcelWriter(String startDate, String endDate, String path, Mitarbeiter[] mitarbeiterDB){
     	this.startDate = startDate;
     	this.endDate = endDate;
     	this.path = path;
     	this.mitarbeiterDB = mitarbeiterDB;
+    	filename = path + "Fehlzeitenerfassung_" + this.startDate + "-" + this.endDate + ".xls";
     }
     
     
@@ -100,7 +107,7 @@ public class ExcelWriter {
         lastRow += 1;
 
         try {
-            FileOutputStream output = new FileOutputStream(path + "Fehlzeitenerfassung_" + this.startDate + "-" + this.endDate + ".xls");
+            FileOutputStream output = new FileOutputStream(path + "Fehlzeitenerfassung_" + this.startDate + "-" + this.endDate + ".xls");   
             workbook.write(output);
             output.close();
         } catch (Exception e) {

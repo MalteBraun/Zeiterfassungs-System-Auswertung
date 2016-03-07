@@ -48,10 +48,12 @@ public class SendEmail {
 			msgBody = new MimeBodyPart();
 			
 			//Anhang vorbereiten
-			String file = "/Users/Braun/workspace_mars/SendMail/Data/Anhang.txt";
-			DataSource source = new FileDataSource(file);
+			String filename = auswertung.ExcelWriter.getFilename();
+			String filepath = Settings.getPath().replace('/', '\\')+filename;
+			DataSource source = new FileDataSource(filepath);
+			System.out.println("Source: "+filepath);
 			msgBody.setDataHandler(new DataHandler(source));
-			msgBody.setFileName(file);
+			msgBody.setFileName(filepath);
 			multipart.addBodyPart(msgBody);
 			
 			msg.setContent(multipart);
@@ -63,7 +65,6 @@ public class SendEmail {
 			mex.printStackTrace();
 		}
 	}
-
 }
 
 

@@ -28,10 +28,15 @@ public class GuiController {
 	@FXML public TextArea infoTextArea;
 	@FXML private Button startButton;
 	@FXML private Button exitButton;
-
-	public void closeWindow(ActionEvent event){
-	 Stage stage = (Stage) exitButton.getScene().getWindow();
-	 stage.close();
+	
+	LocalDate startDate;
+	LocalDate endDate;
+	String path;
+	Boolean email; 
+	
+public void closeWindow(ActionEvent event){
+    Stage stage = (Stage) exitButton.getScene().getWindow();
+    stage.close();
  }
  
 
@@ -44,20 +49,20 @@ public class GuiController {
  	}
  }
  
- public void startProgramm(ActionEvent event) throws Exception{
-	 	
-	LocalDate startDate = von_datePicker.getValue();
-	LocalDate endDate = bis_datePicker.getValue();
-	String path = ausgabeverzeichnissField.getText();
-	Boolean email = emailRadio.isSelected();
-	/*
+public void startProgramm(ActionEvent event) throws Exception{
+	 
+	this.startDate = von_datePicker.getValue();
+	this.endDate = bis_datePicker.getValue();
+	this.path = ausgabeverzeichnissField.getText();
+	this.email = emailRadio.isSelected();
+
+	
 	System.out.println("Startdate: "+startDate.toString());
 	System.out.println("Enddate: "+endDate.toString());
 	System.out.println("Path: "+path);
 	System.out.println("email: "+email.toString());
 	System.out.println(" -----  ");
 	System.out.println();
-	*/
 	
 	if(valuesValid(startDate, endDate, path)){
 	    Settings settings = new Settings(startDate, endDate, path, email);
@@ -76,4 +81,52 @@ public class GuiController {
 		 return true;
 	 } 
  }
+ //---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---//
+ //-------------------------------------------------Mail-Controller ab hier---------------------------------------------//
+ //---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---//
+ 
+	@FXML	TextField toAdress;
+	@FXML	TextField title;
+	@FXML	TextArea bodyText;
+	@FXML	Label SuccessMessage;
+	@FXML	Button closeButton;
+	@FXML   Button mailTest;
+	
+	
+public void mailTest(ActionEvent event){
+    Settings settings = new Settings();
+    settings.sendMail();
+}
+
+public void sendMail(ActionEvent event){
+	
+    String adress = null;
+    String betreff = null;
+    String body= null;
+    Boolean dataCorrect = true;
+    
+    if(toAdress.getText() != null){ adress = toAdress.getText(); }
+    else{ SuccessMessage.setText("Bitte tragen Sie eine Email Adresse ein");dataCorrect = false;}
+    if(title.getText() != null){ betreff = title.getText();	}
+    else{ SuccessMessage.setText("Bitte geben Sie einen Titel an");dataCorrect = false;}
+    if(bodyText.getText() != null){ body = bodyText.getText(); }
+    else{ SuccessMessage.setText("Bitte tragen sie einen Text ein");dataCorrect = false;}
+		
+    if(dataCorrect){
+	SendEmail.send(adress, betreff, body); 
+	Stage stage = (Stage) closeButton.getScene().getWindow();	
+    try {
+	Thread.sleep(2000);
+    }catch (InterruptedException e) {
+	e.printStackTrace();
+    }
+    stage.close();
+    }		
+}
+	
+public void closeMailWindow(ActionEvent event){
+    Stage stage = (Stage) closeButton.getScene().getWindow();
+    stage.close();
+}
+	
 }
