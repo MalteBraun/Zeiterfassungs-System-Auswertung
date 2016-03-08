@@ -51,8 +51,7 @@ public class DBQuery {
 
     protected static void connectToDB(){
 	    	
-        try {          
-        	
+        try {             	
             connection = DriverManager.getConnection("jdbc:firebirdsql://192.168.99.151/HecomZEF?encoding=ISO8859_1", "SYSDBA", "masterkey");
             System.out.println("Verbindung hergestellt");
             

@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 
 public class Settings {
 
+    	private static String password = "ABC123";
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private static String path;
@@ -22,6 +23,14 @@ public class Settings {
 	private Date[] holidays;
 	private Mitarbeiter[] mitarbeiter;
 	
+	public static String getPassword() {
+	    return password;
+	}
+
+	public void setPassword(String password) {
+	    this.password = password;
+	}
+
 	private String startDayFormated;
 	private String endDayFormated;
 	

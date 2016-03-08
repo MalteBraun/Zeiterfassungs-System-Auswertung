@@ -1,13 +1,18 @@
 
 
 import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
@@ -16,7 +21,6 @@ import javafx.stage.Stage;
 import javafx.stage.DirectoryChooser;
 
 public class GuiController {
-
 
 	@FXML private Label hecom_logo;
 	@FXML protected DatePicker von_datePicker;
@@ -39,7 +43,6 @@ public void closeWindow(ActionEvent event){
     stage.close();
  }
  
-
  public void chooseFile(ActionEvent event){ 
  	DirectoryChooser directoryChooser = new DirectoryChooser();
  	directoryChooser.setTitle("Ausgabeverzeichniss wählen");
@@ -55,15 +58,7 @@ public void startProgramm(ActionEvent event) throws Exception{
 	this.endDate = bis_datePicker.getValue();
 	this.path = ausgabeverzeichnissField.getText();
 	this.email = emailRadio.isSelected();
-
-	
-	System.out.println("Startdate: "+startDate.toString());
-	System.out.println("Enddate: "+endDate.toString());
-	System.out.println("Path: "+path);
-	System.out.println("email: "+email.toString());
-	System.out.println(" -----  ");
-	System.out.println();
-	
+		 
 	if(valuesValid(startDate, endDate, path)){
 	    Settings settings = new Settings(startDate, endDate, path, email);
 	    settings.startApp();
@@ -81,16 +76,16 @@ public void startProgramm(ActionEvent event) throws Exception{
 		 return true;
 	 } 
  }
- //---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---//
- //-------------------------------------------------Mail-Controller ab hier---------------------------------------------//
- //---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---//
+//---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---//
+//-------------------------------------------------Mail-Controller ----------------------------------------------------//
+//---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---//
  
-	@FXML	TextField toAdress;
-	@FXML	TextField title;
-	@FXML	TextArea bodyText;
-	@FXML	Label SuccessMessage;
-	@FXML	Button closeButton;
-	@FXML   Button mailTest;
+@FXML	TextField toAdress;
+@FXML	TextField title;
+@FXML	TextArea bodyText;
+@FXML	Label SuccessMessage;
+@FXML	Button closeButton;
+@FXML   Button mailTest;
 	
 	
 public void mailTest(ActionEvent event){
@@ -128,5 +123,39 @@ public void closeMailWindow(ActionEvent event){
     Stage stage = (Stage) closeButton.getScene().getWindow();
     stage.close();
 }
+
+//---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---//
+//-------------------------------------------------Password-Controller ------------------------------------------------//
+//---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---//
+
+@FXML Button loginButton;
+@FXML PasswordField passwordField;
+@FXML Label meldungLabel;
 	
+public void login(ActionEvent event){
+    
+	try {
+	    String pw = passwordField.getText();
+	    System.out.println(pw);
+	    if(pw.equals(Settings.getPassword())){
+		//öffne haupt Fenster
+		Parent root;
+		root = FXMLLoader.load(getClass().getResource("GUI.fxml"));
+		Stage stage = new Stage();
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+		//Schließe Login Fenster
+		 Stage stage2 = (Stage) loginButton.getScene().getWindow();
+		 stage2.close();
+	    }else{
+		    meldungLabel.setText("Das Passwort war Ungültig");
+	    }    
+	}catch (IOException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
+    
+}    
+
 }
