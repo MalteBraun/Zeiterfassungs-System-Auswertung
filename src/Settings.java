@@ -2,8 +2,8 @@
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.Locale;
+//import java.util.Date;
+//import java.util.Locale;
 
 import auswertung.DBQuery;
 import auswertung.ExcelWriter;
@@ -16,19 +16,19 @@ import javafx.stage.Stage;
 public class Settings {
 
     	private static String password = "ABC123";
-	private LocalDate startDate;
-	private LocalDate endDate;
+	//private LocalDate startDate;
+	//private LocalDate endDate;
 	private static String path;
-	private Boolean email;
-	private Date[] holidays;
-	private Mitarbeiter[] mitarbeiter;
+	//private Boolean email;
+	//private Date[] holidays;
+	//private Mitarbeiter[] mitarbeiter;
 	
 	public static String getPassword() {
 	    return password;
 	}
 
 	public void setPassword(String password) {
-	    this.password = password;
+	    Settings.password = password;
 	}
 
 	private String startDayFormated;
@@ -40,23 +40,31 @@ public class Settings {
 	}
 	
 	public Settings(LocalDate startDate, LocalDate endDate, String path, Boolean email){
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.path = path+'\\';
-		this.email = email;
+		//this.startDate = startDate;
+		//this.endDate = endDate;
+		Settings.path = path+'\\';
+		//this.email = email;
 		this.startDayFormated =  startDate.format(DateTimeFormatter.ofPattern("d.MM.yyyy"));
 		this.endDayFormated = endDate.format(DateTimeFormatter.ofPattern("d.MM.yyyy"));		
 	}
 	
 	public void startApp() throws Exception{	    
-	    DBQuery datenbank = new DBQuery(startDayFormated, endDayFormated, path);  		
-	    Mitarbeiter[] mitarbeiterDB = datenbank.createMitarbeiterDB();    //Erstelt einen Array aus Mitarbeiter Objekten aller Aktiven Mitarbeiter 	    
+	    DBQuery datenbank = new DBQuery(startDayFormated, endDayFormated, path);
+	    GuiController.raiseProgressbar(15.0);
+	    Mitarbeiter[] mitarbeiterDB = DBQuery.createMitarbeiterDB();    //Erstelt einen Array aus Mitarbeiter Objekten aller Aktiven Mitarbeiter
+	    GuiController.raiseProgressbar(20.0);
     	    ExcelWriter excelWriter = new ExcelWriter(startDayFormated, endDayFormated, path, mitarbeiterDB);
+    	    GuiController.raiseProgressbar(10.0);
     	    excelWriter.createExcel();
+    	    GuiController.raiseProgressbar(10.0);
     	    excelWriter.addHeader();
+    	    GuiController.raiseProgressbar(10.0);
     	    excelWriter.fillExcel();
+    	    GuiController.raiseProgressbar(10.0);
     	    excelWriter.fillSum();	
+    	    GuiController.raiseProgressbar(15.0);
     	    excelWriter.addImage();
+    	    GuiController.raiseProgressbar(10.0);
 	}
 	
 	public void sendMail(){

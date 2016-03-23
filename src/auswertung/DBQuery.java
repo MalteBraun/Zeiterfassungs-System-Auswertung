@@ -5,14 +5,14 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
+//import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.DateTimeException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+//import java.time.DateTimeException;
+//import java.time.LocalDate;
+//import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.Locale;
+//import java.util.Locale;
 
 
 /**
@@ -27,16 +27,14 @@ public class DBQuery {
     public static String startDayFormated; //erstellt in Objekt
     public static String endDayFormated; //erstellt in Objekt
     public static String path;
-    
- 	
 	
     public DBQuery(String startDate, String endDate, String path) {
 	System.out.println("StartDate: "+startDate);
 	System.out.println("EndDate: "+endDate);
 	
-	this.startDate = startDate;
-	this.endDate = endDate;
-	this.path = path;
+	DBQuery.startDate = startDate;
+	DBQuery.endDate = endDate;
+	DBQuery.path = path;
 	
 	startDayFormated = convertDateSQL(startDate);
 	endDayFormated = convertDateSQL(endDate);
@@ -47,7 +45,6 @@ public class DBQuery {
 	connectToDB();
 	getHolidays();
     }
-
 
     protected static void connectToDB(){
 	    	
@@ -60,8 +57,7 @@ public class DBQuery {
             Thread.currentThread().getStackTrace();
         }
     }  
-    
-    
+        
     private static String convertDateSQL(String value) {
         try {
             SimpleDateFormat formatZEF = new SimpleDateFormat("dd.MM.yyyy");
@@ -72,8 +68,7 @@ public class DBQuery {
             System.out.println("Fehler in convertDate.");    
         }
         return null;
-    } 
-    
+    }     
         
     protected static ResultSet query(String queryString) {
         try {
@@ -90,8 +85,7 @@ public class DBQuery {
             
     protected static Date[] getHolidays()
     {   
-	try {
-	    
+	try { 	    
 	    PreparedStatement prepstate = connection.prepareStatement("SELECT TAG FROM AUSWERTUNG WHERE TAG >= ? AND TAG <= ? AND Feiertag = 1 GROUP BY TAG", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 	    prepstate.setString(1, startDayFormated);
 	    prepstate.setString(2, endDayFormated);
@@ -140,7 +134,6 @@ public class DBQuery {
     }
     
     protected static ResultSet get_krankheit(String pnr) throws Exception{
-    	//System.out.println("getKrankheit");
     	PreparedStatement prepstate = connection.prepareStatement("Select TAG, BEG_STD, BEG_MIN, END_STD, END_MIN, KENNZEICHEN from STEMPELUNG where PNR = ? and KENNZEICHEN = 'K' AND TAG >= ? AND TAG <= ? ORDER by TAG ASC", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY, ResultSet.HOLD_CURSORS_OVER_COMMIT);
 		prepstate.setString(1, pnr);
 		prepstate.setString(2, startDayFormated);

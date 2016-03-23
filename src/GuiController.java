@@ -14,6 +14,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -22,21 +23,32 @@ import javafx.stage.DirectoryChooser;
 
 public class GuiController {
 
-	@FXML private Label hecom_logo;
-	@FXML protected DatePicker von_datePicker;
-	@FXML protected DatePicker bis_datePicker;
-	@FXML protected TextField ausgabeverzeichnissField;
-	@FXML private Button durchsuchenButton;
-	@FXML private RadioButton emailRadio;
-	@FXML private ProgressBar fortschrittProgressBar;
-	@FXML public TextArea infoTextArea;
-	@FXML private Button startButton;
-	@FXML private Button exitButton;
+	@FXML private Label hecom_logo = new Label();
+	@FXML protected DatePicker von_datePicker = new DatePicker();
+	@FXML protected DatePicker bis_datePicker = new DatePicker();
+	@FXML protected TextField ausgabeverzeichnissField = new TextField();
+	@FXML private Button durchsuchenButton = new Button();;
+	@FXML private RadioButton emailRadio = new RadioButton();
+	@FXML private static ProgressBar fortschrittProgressBar = new ProgressBar(0);
+	@FXML public TextArea infoTextArea = new TextArea();
+	@FXML private Button startButton = new Button();
+	@FXML private Button exitButton = new Button();
 	
+	ProgressIndicator pind = new ProgressIndicator(0);
+		
 	LocalDate startDate;
 	LocalDate endDate;
 	String path;
 	Boolean email; 
+	
+public static void raiseProgressbar(double raiseValue){
+    if(!fortschrittProgressBar.hasProperties()){
+	fortschrittProgressBar.setProgress(0.0);
+    }else{
+	double currentProgress = fortschrittProgressBar.getProgress();
+	fortschrittProgressBar.setProgress(currentProgress + raiseValue);
+    }
+}
 	
 public void closeWindow(ActionEvent event){
     Stage stage = (Stage) exitButton.getScene().getWindow();
@@ -76,6 +88,7 @@ public void startProgramm(ActionEvent event) throws Exception{
 		 return true;
 	 } 
  }
+ 
 //---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---//
 //-------------------------------------------------Mail-Controller ----------------------------------------------------//
 //---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---//
@@ -85,8 +98,7 @@ public void startProgramm(ActionEvent event) throws Exception{
 @FXML	TextArea bodyText;
 @FXML	Label SuccessMessage;
 @FXML	Button closeButton;
-@FXML   Button mailTest;
-	
+@FXML   Button mailTest;	
 	
 public void mailTest(ActionEvent event){
     Settings settings = new Settings();
@@ -148,11 +160,12 @@ public void login(ActionEvent event){
 		//Schließe Login Fenster
 		 Stage stage2 = (Stage) loginButton.getScene().getWindow();
 		 stage2.close();
+		 GuiController.raiseProgressbar(0.0);
 	    }else{
 		    meldungLabel.setText("Das Passwort war Ungültig");
 	    }    
 	}catch (IOException e) {
-	    // TODO Auto-generated catch block
+	    System.out.println("Fehler beim Überprüfen des Passworts");
 	    e.printStackTrace();
 	}
     

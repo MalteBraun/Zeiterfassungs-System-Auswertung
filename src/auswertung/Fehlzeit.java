@@ -3,7 +3,6 @@ package auswertung;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Fehlzeit.
  *

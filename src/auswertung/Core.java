@@ -1,6 +1,3 @@
-/*
- * 
- */
 package auswertung;
 
 import java.time.Instant;
@@ -12,8 +9,6 @@ import java.util.Date;
 import java.util.List;
 
 
-
-// TODO: Auto-generated Javadoc
 /**
  * The Class Core.
  * Hier werden die meisten Berechnung vorgenommen
@@ -137,7 +132,7 @@ public class Core {
 						position++;	//Wähle den nächsten (in diesem Fall Sa,So od. Feiertag)
 						tag++;
 					}else{
-						position++;	//Wähle den nächsten Tag und beginn eine neue Liste
+						position++; //Wähle den nächsten Tag und beginn eine neue Liste
 						interval++; //Es wird ein neues Intervall angesetzt
 						tag = 0; //gezählte Tage werden wieder auf 0 gesetzt
 					}
@@ -150,7 +145,7 @@ public class Core {
 			}		
 		}
 		//setLength_vonbis();
-		System.out.println("getvonBis_Fertig");
+		//System.out.println("getvonBis_Fertig");
 		return compactVonBis(sortiert);		
 	}
 
@@ -245,16 +240,16 @@ public class Core {
 	 * @return true, if is feiertag
 	 */
 	private boolean isFeiertag(LocalDate tag){
-			for (Date tag2:DBQuery.feiertage)
-			{
-				Instant inst = Instant.ofEpochMilli(tag2.getTime());
-				LocalDate temp = LocalDateTime.ofInstant(inst, ZoneId.systemDefault()).toLocalDate();
+		for (Date tag2:DBQuery.feiertage)
+		{
+			Instant inst = Instant.ofEpochMilli(tag2.getTime());
+			LocalDate temp = LocalDateTime.ofInstant(inst, ZoneId.systemDefault()).toLocalDate();
 				
-				if(temp.equals(tag)){
-					return true;
-				}
+			if(temp.equals(tag)){
+				return true;
 			}
-		return false;
+		}
+	return false;
 	}
 	
 	/**
