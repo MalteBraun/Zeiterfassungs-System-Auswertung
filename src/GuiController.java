@@ -27,35 +27,37 @@ public class GuiController {
 	@FXML protected DatePicker von_datePicker = new DatePicker();
 	@FXML protected DatePicker bis_datePicker = new DatePicker();
 	@FXML protected TextField ausgabeverzeichnissField = new TextField();
-	@FXML private Button durchsuchenButton = new Button();;
+	@FXML private Button durchsuchenButton = new Button();
 	@FXML private RadioButton emailRadio = new RadioButton();
-	@FXML private static ProgressBar fortschrittProgressBar = new ProgressBar(0);
-	@FXML public TextArea infoTextArea = new TextArea();
+	@FXML public static TextArea infoTextArea = new TextArea();
 	@FXML private Button startButton = new Button();
 	@FXML private Button exitButton = new Button();
-	
-	ProgressIndicator pind = new ProgressIndicator(0);
-		
+	@FXML private static ProgressBar fortschrittProgressBar = new ProgressBar(0);
+	@FXML private static ProgressIndicator pind = new ProgressIndicator(0);
+			
 	LocalDate startDate;
 	LocalDate endDate;
 	String path;
 	Boolean email; 
 	
-public static void raiseProgressbar(double raiseValue){
-    if(!fortschrittProgressBar.hasProperties()){
-	fortschrittProgressBar.setProgress(0.0);
-    }else{
-	double currentProgress = fortschrittProgressBar.getProgress();
-	fortschrittProgressBar.setProgress(currentProgress + raiseValue);
-    }
+public static void setProgressbar(double stat){
+    	System.out.println("Progress: "+(fortschrittProgressBar.getProgress() + stat));
+    	fortschrittProgressBar.setProgress((fortschrittProgressBar.getProgress() + stat));
+    	if(fortschrittProgressBar.getProgress() >= 1){
+    	    fortschrittProgressBar.setProgress(0);
+    	}
 }
-	
+
+public static void setInfoText(String text){
+    	infoTextArea.setText(text);
+}
+
 public void closeWindow(ActionEvent event){
-    Stage stage = (Stage) exitButton.getScene().getWindow();
-    stage.close();
+    	Stage stage = (Stage) exitButton.getScene().getWindow();
+    	stage.close();
  }
  
- public void chooseFile(ActionEvent event){ 
+public void chooseFile(ActionEvent event){ 
  	DirectoryChooser directoryChooser = new DirectoryChooser();
  	directoryChooser.setTitle("Ausgabeverzeichniss wählen");
  	File dir = directoryChooser.showDialog(null);
@@ -66,21 +68,25 @@ public void closeWindow(ActionEvent event){
  
 public void startProgramm(ActionEvent event) throws Exception{
 	 
-	this.startDate = von_datePicker.getValue();
-	this.endDate = bis_datePicker.getValue();
-	this.path = ausgabeverzeichnissField.getText();
-	this.email = emailRadio.isSelected();
-		 
-	if(valuesValid(startDate, endDate, path)){
-	    Settings settings = new Settings(startDate, endDate, path, email);
+	startDate = von_datePicker.getValue();
+	endDate = bis_datePicker.getValue();
+	path = ausgabeverzeichnissField.getText();
+	email = emailRadio.isSelected();
+	
+	Settings settings = new Settings(startDate,endDate, path, email);
+	
+	if(valuesValid(startDate, endDate)){
 	    settings.startApp();
 	    if(email){
-		settings.sendMail();
+		sendMail();
 	    }
+	}else{
+	    von_datePicker.setValue(null);
+	    bis_datePicker.setValue(null);
 	}
  }
  
- private boolean valuesValid(LocalDate startDate, LocalDate endDate, String path){
+ private boolean valuesValid(LocalDate startDate, LocalDate endDate){
 	 if(startDate.isAfter(endDate)){
 		 infoTextArea.setText("Der Auswertungszeitraum ist Ungültig. \nBitte wählen Sie ein Anfangsdatum, welches vor dem Enddatum liegt.");
 		 return false;
@@ -93,47 +99,55 @@ public void startProgramm(ActionEvent event) throws Exception{
 //-------------------------------------------------Mail-Controller ----------------------------------------------------//
 //---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---//
  
-@FXML	TextField toAdress;
-@FXML	TextField title;
-@FXML	TextArea bodyText;
-@FXML	Label SuccessMessage;
-@FXML	Button closeButton;
-@FXML   Button mailTest;	
+ 	@FXML	TextField toAdress;
+ 	@FXML	TextField title;
+ 	@FXML	TextArea bodyText;
+ 	@FXML	Label SuccessMessage;
+	@FXML	Button closeButton;
+	@FXML   Button mailTest;	
 	
-public void mailTest(ActionEvent event){
-    Settings settings = new Settings();
-    settings.sendMail();
+public void sendMail(){
+    	try{
+    	    Parent root = FXMLLoader.load(getClass().getResource("Mail_GUI.fxml"));
+    	    Stage stage = new Stage();
+    	    Scene scene = new Scene(root);
+    	    stage.setScene(scene);
+    	    stage.show();
+	
+    	}catch(Exception e) {
+	e.printStackTrace();
+    	}
 }
 
 public void sendMail(ActionEvent event){
 	
-    String adress = null;
-    String betreff = null;
-    String body= null;
-    Boolean dataCorrect = true;
+    	String adress = null;
+    	String betreff = null;
+    	String body= null;
+    	Boolean dataCorrect = true;
     
-    if(toAdress.getText() != null){ adress = toAdress.getText(); }
-    else{ SuccessMessage.setText("Bitte tragen Sie eine Email Adresse ein");dataCorrect = false;}
-    if(title.getText() != null){ betreff = title.getText();	}
-    else{ SuccessMessage.setText("Bitte geben Sie einen Titel an");dataCorrect = false;}
-    if(bodyText.getText() != null){ body = bodyText.getText(); }
-    else{ SuccessMessage.setText("Bitte tragen sie einen Text ein");dataCorrect = false;}
+    	if(toAdress.getText() != null){ adress = toAdress.getText(); }
+    	else{ SuccessMessage.setText("Bitte tragen Sie eine Email Adresse ein");dataCorrect = false;}
+    	if(title.getText() != null){ betreff = title.getText();	}
+    	else{ SuccessMessage.setText("Bitte geben Sie einen Titel an");dataCorrect = false;}
+    	if(bodyText.getText() != null){ body = bodyText.getText(); }
+    	else{ SuccessMessage.setText("Bitte tragen sie einen Text ein");dataCorrect = false;}
 		
-    if(dataCorrect){
-	SendEmail.send(adress, betreff, body); 
-	Stage stage = (Stage) closeButton.getScene().getWindow();	
-    try {
-	Thread.sleep(2000);
-    }catch (InterruptedException e) {
-	e.printStackTrace();
-    }
-    stage.close();
-    }		
+    	if(dataCorrect){
+    	    SendEmail.send(adress, betreff, body); 
+    	    Stage stage = (Stage) closeButton.getScene().getWindow();	
+    	    try {
+    		Thread.sleep(2000);
+    	    }catch (InterruptedException e) {
+    		e.printStackTrace();
+    	    }
+    	    stage.close();
+    	}		
 }
 	
 public void closeMailWindow(ActionEvent event){
-    Stage stage = (Stage) closeButton.getScene().getWindow();
-    stage.close();
+    	Stage stage = (Stage) closeButton.getScene().getWindow();
+    	stage.close();
 }
 
 //---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---   ---//
@@ -145,7 +159,6 @@ public void closeMailWindow(ActionEvent event){
 @FXML Label meldungLabel;
 	
 public void login(ActionEvent event){
-    
 	try {
 	    String pw = passwordField.getText();
 	    System.out.println(pw);
@@ -158,9 +171,8 @@ public void login(ActionEvent event){
 		stage.setScene(scene);
 		stage.show();
 		//Schließe Login Fenster
-		 Stage stage2 = (Stage) loginButton.getScene().getWindow();
-		 stage2.close();
-		 GuiController.raiseProgressbar(0.0);
+		Stage stage2 = (Stage) loginButton.getScene().getWindow();
+		stage2.close();
 	    }else{
 		    meldungLabel.setText("Das Passwort war Ungültig");
 	    }    

@@ -16,12 +16,11 @@ import javafx.stage.Stage;
 public class Settings {
 
     	private static String password = "ABC123";
-	//private LocalDate startDate;
-	//private LocalDate endDate;
+	private LocalDate startDate;
+	private LocalDate endDate;
 	private static String path;
-	//private Boolean email;
-	//private Date[] holidays;
-	//private Mitarbeiter[] mitarbeiter;
+	private Boolean email;
+	GuiController gui;
 	
 	public static String getPassword() {
 	    return password;
@@ -31,55 +30,41 @@ public class Settings {
 	    Settings.password = password;
 	}
 
-	private String startDayFormated;
-	private String endDayFormated;
-	
-
-	public Settings(){
-	    
-	}
+	private static String startDayFormated;
+	private static String endDayFormated;
 	
 	public Settings(LocalDate startDate, LocalDate endDate, String path, Boolean email){
-		//this.startDate = startDate;
-		//this.endDate = endDate;
-		Settings.path = path+'\\';
-		//this.email = email;
-		this.startDayFormated =  startDate.format(DateTimeFormatter.ofPattern("d.MM.yyyy"));
-		this.endDayFormated = endDate.format(DateTimeFormatter.ofPattern("d.MM.yyyy"));		
+	    this.startDate = startDate;
+	    this.endDate = endDate;
+	    Settings.path = path+'\\';
+	    this.email = email;
+	    Settings.startDayFormated =  startDate.format(DateTimeFormatter.ofPattern("d.MM.yyyy"));
+	    Settings.endDayFormated = endDate.format(DateTimeFormatter.ofPattern("d.MM.yyyy"));
+	    gui = new GuiController();
 	}
 	
-	public void startApp() throws Exception{	    
+	public void startApp() throws Exception{
+	    GuiController.setInfoText("Sammele Daten im gewählten Zeitraum");
 	    DBQuery datenbank = new DBQuery(startDayFormated, endDayFormated, path);
-	    GuiController.raiseProgressbar(15.0);
+	    GuiController.setProgressbar(0.1);
 	    Mitarbeiter[] mitarbeiterDB = DBQuery.createMitarbeiterDB();    //Erstelt einen Array aus Mitarbeiter Objekten aller Aktiven Mitarbeiter
-	    GuiController.raiseProgressbar(20.0);
+	    GuiController.setProgressbar(0.2);
     	    ExcelWriter excelWriter = new ExcelWriter(startDayFormated, endDayFormated, path, mitarbeiterDB);
-    	    GuiController.raiseProgressbar(10.0);
+    	    GuiController.setProgressbar(0.1);
     	    excelWriter.createExcel();
-    	    GuiController.raiseProgressbar(10.0);
+    	    GuiController.setProgressbar(0.1);
     	    excelWriter.addHeader();
-    	    GuiController.raiseProgressbar(10.0);
+    	    GuiController.setProgressbar(0.1);
     	    excelWriter.fillExcel();
-    	    GuiController.raiseProgressbar(10.0);
+    	    GuiController.setProgressbar(0.1);
     	    excelWriter.fillSum();	
-    	    GuiController.raiseProgressbar(15.0);
+    	    GuiController.setProgressbar(0.15);
     	    excelWriter.addImage();
-    	    GuiController.raiseProgressbar(10.0);
+    	    GuiController.setProgressbar(0.1);
+    	    GuiController.setInfoText("dfgadfgdrfa");
+    	    System.out.println("Fertig");
 	}
-	
-	public void sendMail(){
-	    try{
-		Parent root = FXMLLoader.load(getClass().getResource("Mail_GUI.fxml"));
-		Stage stage = new Stage();
-		Scene scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
-		
-	    }catch(Exception e) {
-		e.printStackTrace();
-	    }
-	}
-		
+			
 	public static String getPath() {
 	    return path;
 	}

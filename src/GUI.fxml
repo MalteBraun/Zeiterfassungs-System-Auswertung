@@ -25,6 +25,6 @@
          <image>
             <Image url="@../bin/auswertung/hecom_logo.jpg" />
          </image></ImageView>
-      <Button fx:id="mailTest" layoutX="211.0" layoutY="216.0" mnemonicParsing="false" onAction="#mailTest" prefHeight="25.0" prefWidth="91.0" text="MailTest" />
+      <ProgressIndicator layoutX="493.0" layoutY="270.0" progress="0.0" />
    </children>
 </Pane>
