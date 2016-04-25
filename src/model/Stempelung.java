@@ -55,7 +55,7 @@ public class Stempelung {
 		return differenz;
 	}
 
-	protected String simplifyDateJahr() {
+    protected String simplifyDateJahr() {
         try {
         	String value = datum.toString();
             SimpleDateFormat formatZEF = new SimpleDateFormat("yyyy-MM-dd");

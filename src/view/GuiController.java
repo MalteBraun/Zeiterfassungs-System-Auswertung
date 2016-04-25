@@ -13,12 +13,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -31,7 +31,7 @@ public class GuiController {
 	@FXML protected DatePicker bis_datePicker = new DatePicker();
 	@FXML protected TextField ausgabeverzeichnissField = new TextField();
 	@FXML private Button durchsuchenButton = new Button();
-	@FXML private RadioButton emailRadio = new RadioButton();
+	@FXML private CheckBox emailButton = new CheckBox();
 	@FXML public static TextArea infoTextArea = new TextArea();
 	@FXML private Button startButton = new Button();
 	@FXML private Button exitButton = new Button();
@@ -74,11 +74,10 @@ public void startProgramm(ActionEvent event) throws Exception{
 	startDate = von_datePicker.getValue();
 	endDate = bis_datePicker.getValue();
 	path = ausgabeverzeichnissField.getText();
-	email = emailRadio.isSelected();
+	email = emailButton.isSelected();
 	
-	Settings settings = new Settings(startDate,endDate, path, email);
-	
-	if(valuesValid(startDate, endDate)){
+	if(valuesValid(startDate, endDate, path)){
+	    Settings settings = new Settings(startDate,endDate, path, email);
 	    settings.startApp();
 	    if(email){
 		sendMail();
@@ -89,10 +88,14 @@ public void startProgramm(ActionEvent event) throws Exception{
 	}
  }
  
- private boolean valuesValid(LocalDate startDate, LocalDate endDate){
-	 if(startDate.isAfter(endDate)){
-		 infoTextArea.setText("Der Auswertungszeitraum ist Ungültig. \nBitte wählen Sie ein Anfangsdatum, welches vor dem Enddatum liegt.");
-		 return false;
+ private boolean valuesValid(LocalDate startDate, LocalDate endDate, String path){
+     	 if(path.isEmpty()){
+     	     	infoTextArea.setText("Bitte tragen Sie ein Ausgabeverzeichniss ein");
+     	     	return false;
+     	 }
+	 if(startDate.isAfter(endDate) || startDate == null || endDate == null){
+		infoTextArea.setText("Der Auswertungszeitraum ist Ungültig. \nBitte wählen Sie ein Anfangsdatum, welches vor dem Enddatum liegt.");
+		return false;
 	 }else{
 		 return true;
 	 } 
@@ -114,6 +117,7 @@ public void sendMail(){
     	    Parent root = FXMLLoader.load(getClass().getResource("Mail_GUI.fxml"));
     	    Stage stage = new Stage();
     	    Scene scene = new Scene(root);
+    	    stage.setTitle("Mail");
     	    stage.setScene(scene);
     	    stage.show();
 	
@@ -171,6 +175,7 @@ public void login(ActionEvent event){
 		root = FXMLLoader.load(getClass().getResource("GUI.fxml"));
 		Stage stage = new Stage();
 		Scene scene = new Scene(root);
+		stage.setTitle("Administration");
 		stage.setScene(scene);
 		stage.show();
 		//Schließe Login Fenster

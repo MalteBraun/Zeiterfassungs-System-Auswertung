@@ -22,9 +22,7 @@ public class Fehlzeit {
 	private String[] vonbis; // Erster und letzter Tag eines Intervalls als String (z.B. 01.03.2016 - 03.03.2016)
 	private Core core; // hier finden komplexere Berechnungen statt
 
-    
-
-	 public Fehlzeit(String typ, String pnr) throws Exception
+	public Fehlzeit(String typ, String pnr) throws Exception
  	{
  		this.typ = typ;
  		this.pnr = pnr;
@@ -45,7 +43,7 @@ public class Fehlzeit {
  		this.intervall = core.getIntervall();
  	}
  	 	
-	 public void getKrankheitAusfall() throws Exception
+	public void getKrankheitAusfall() throws Exception
  	{
  		ResultSet rs2 = DBQuery.get_krankheit(pnr);
 		try
@@ -84,8 +82,7 @@ public class Fehlzeit {
 		}
  	}
  	
-
-	 public void getUrlaubAusfall() throws Exception
+	public void getUrlaubAusfall() throws Exception
  	{
  		ResultSet rs3 = DBQuery.get_urlaub(pnr);
  		try
@@ -114,16 +111,15 @@ public class Fehlzeit {
     	}
  	}
  	
-
-	 public void setType(String type){
+	public void setType(String type){
  		this.typ = type;
  	}
 
-	 public String getType(){
+	public String getType(){
  		return typ;
  	}
 
-	 public void print(){
+	public void print(){
  		System.out.println(typ);
  		int i = 1;
  		for (Stempelung einzelStempel : stempel) {
@@ -132,7 +128,7 @@ public class Fehlzeit {
 		}
  	}
 
-	 public void printVonBis(){    
+	public void printVonBis(){    
  		if( vonbis != null){
  			for(String tag : vonbis){
  				System.out.println(tag);
@@ -140,11 +136,11 @@ public class Fehlzeit {
  		}	
  	}
  	
-	 public String[] getVonBis(){
+	public String[] getVonBis(){
  			return vonbis;	
  	}
  	
-	 public double getKrankheitFehlzeit(){
+	public double getKrankheitFehlzeit(){
  		double sum = 0.0;
  		
  		for( Intervall inter: intervall)
@@ -154,7 +150,7 @@ public class Fehlzeit {
  		return sum;
  	}
 
-	 public double getUrlaubFehlzeit(){
+	public double getUrlaubFehlzeit(){
  		double sum = 0.0;
  		
  		for( Intervall inter: intervall)
@@ -164,12 +160,11 @@ public class Fehlzeit {
  		return sum;
  	}
 
-	 public int getLength(){
+	public int getLength(){
  		return stempel.length;
  	}
 
-
-	 public Stempelung[] getStempelung(){
+	public Stempelung[] getStempelung(){
  		return this.stempel;
  	}
 

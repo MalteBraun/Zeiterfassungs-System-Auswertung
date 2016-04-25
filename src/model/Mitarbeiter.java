@@ -22,7 +22,6 @@ public class Mitarbeiter
        
 	public Mitarbeiter(String vorname, String nachname, String pnr) throws Exception
 	{
-	//System.out.println(vorname+" "+nachname);
         this.vorname = vorname;
         this.nachname = nachname;
         this.pnr = pnr;

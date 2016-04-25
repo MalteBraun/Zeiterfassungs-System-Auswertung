@@ -1,3 +1,4 @@
+
 package controller;
 
 import java.time.Instant;
@@ -148,8 +149,6 @@ public class Core {
 				tag = 0;
 			}		
 		}
-		//setLength_vonbis();
-		//System.out.println("getvonBis_Fertig");
 		return compactVonBis(sortiert);		
 	}
 
@@ -277,6 +276,7 @@ public class Core {
 	 	int anzahl = 0;
 	 	List<Integer> anzahlStempel = new ArrayList<Integer>();
 
+	 	//z‰hlt wie groﬂ der Intervall-Array sein muss
 	 	while(vonbis_interval[0][interval] != null) //Solange das erste Element des Intervalls != null ist
 	 	{
 	 		while(vonbis_interval[anzahl][interval] != null)
@@ -290,7 +290,7 @@ public class Core {
 	 	
 	 	Intervall[] intervall = new Intervall[interval];
 	 	
-	 	if(vonbis_interval[0][0] != null )
+	 	if(vonbis_interval[0][0] != null ) //wenn das erste Objekt nicht null ist gibt es min. 1 Fehlzeit
 	 	{
 	 		for( int i = 0; i < interval; i++)
 		 	{

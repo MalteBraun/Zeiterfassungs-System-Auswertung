@@ -30,7 +30,7 @@ public class DBQuery {
     public static String endDayFormated; //erstellt in Objekt
   
 	
-    public DBQuery(String startDate, String endDate, String path) {
+    public DBQuery(String startDate, String endDate) {
 	System.out.println("StartDate: "+startDate);
 	System.out.println("EndDate: "+endDate);
 	

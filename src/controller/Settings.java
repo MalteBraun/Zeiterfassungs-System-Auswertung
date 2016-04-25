@@ -15,12 +15,12 @@ import view.GuiController;
 
 public class Settings {
 
-    	private static String password = "ABC123";
-	private LocalDate startDate;
-	private LocalDate endDate;
-	private static String path;
-	private Boolean email;
-	GuiController gui;
+    	private static String password = "ABC123";	// Passwort 
+	private LocalDate startDate;	// Gewähltes Anfangsdatum
+	private LocalDate endDate;	// Gewähltes Enddatum
+	private static String path;	//gewählter Pfad
+	private Boolean email;	//Boolean ob Emailversendet werden soll oder nicht
+	
 	
 	public static String getPassword() {
 	    return password;
@@ -39,30 +39,18 @@ public class Settings {
 	    Settings.path = path+'\\';
 	    this.email = email;
 	    Settings.startDayFormated =  startDate.format(DateTimeFormatter.ofPattern("d.MM.yyyy"));
-	    Settings.endDayFormated = endDate.format(DateTimeFormatter.ofPattern("d.MM.yyyy"));
-	    gui = new GuiController();
+	    Settings.endDayFormated = endDate.format(DateTimeFormatter.ofPattern("d.MM.yyyy"));	    
 	}
 	
 	public void startApp() throws Exception{
-	    GuiController.setInfoText("Sammele Daten im gewählten Zeitraum");
-	    DBQuery datenbank = new DBQuery(startDayFormated, endDayFormated, path);
-	    GuiController.setProgressbar(0.1);
-	    Mitarbeiter[] mitarbeiterDB = DBQuery.createMitarbeiterDB();    //Erstelt einen Array aus Mitarbeiter Objekten aller Aktiven Mitarbeiter
-	    GuiController.setProgressbar(0.2);
-    	    ExcelWriter excelWriter = new ExcelWriter(startDayFormated, endDayFormated, path, mitarbeiterDB);
-    	    GuiController.setProgressbar(0.1);
+	    DBQuery datenbank = new DBQuery(startDayFormated, endDayFormated); 
+	    Mitarbeiter[] mitarbeiter = datenbank.createMitarbeiterDB();    
+    	    ExcelWriter excelWriter = new ExcelWriter(startDayFormated, endDayFormated, path, mitarbeiter);
     	    excelWriter.createExcel();
-    	    GuiController.setProgressbar(0.1);
     	    excelWriter.addHeader();
-    	    GuiController.setProgressbar(0.1);
     	    excelWriter.fillExcel();
-    	    GuiController.setProgressbar(0.1);
     	    excelWriter.fillSum();	
-    	    GuiController.setProgressbar(0.15);
     	    excelWriter.addImage();
-    	    GuiController.setProgressbar(0.1);
-    	    GuiController.setInfoText("dfgadfgdrfa");
-    	    System.out.println("Fertig");
 	}
 			
 	public static String getPath() {

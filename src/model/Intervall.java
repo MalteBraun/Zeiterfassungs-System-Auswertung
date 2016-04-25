@@ -23,7 +23,7 @@ public class Intervall {
 		setVonBis();	
 	}
 	
-	private void bereinige() //entfernt Null-stempelung und gleiche Stempelung aus einem Intervall
+	private void bereinige() //entfernt Null-Stempelung und gleiche Stempelung aus einem Intervall
 	{
 		int nullzaehler = 0;
 		for( int aussenzaehler = 0 ; aussenzaehler < einzelStempelung.length ; aussenzaehler++)
@@ -41,7 +41,7 @@ public class Intervall {
 					}
 				}
 			}
-		}	
+		}
 		int i = 0;
 		int j = 0;
 		Stempelung[] bereinigt = new Stempelung[einzelStempelung.length - nullzaehler];
